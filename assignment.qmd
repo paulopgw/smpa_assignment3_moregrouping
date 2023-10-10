@@ -93,11 +93,6 @@ impeach%>%
   summarize(mean_pct_bachelors = mean(pct_bachelors, na.rm = TRUE))
 
 
-
-
-
-
-
 ```
 
 5)  Do the same as #4, but this time show the MEAN *percentage of the vote that Donald Trump received* for districts that are Yes for impeachment vs. No.  
@@ -109,29 +104,16 @@ impeach%>%
   group_by(for_impeachment) %>%
   summarize(mean_trump_percent = mean(trump_percent, na.rm = TRUE))
 
-
-
-
-
-
-
-
 ```
 
 6)  Filter out only the members who are a yes for impeachment. Then of those "Yes" member, how many won their 2018 election by less than 5 percentage points (`margin_flag_2018`) vs. more?
 
 ```{r}
 
-  
 impeach%>%
   filter(for_impeachment == "YES")%>%
   group_by(margin_flag_2018) %>%
   summarize(count = n())
-
-
-
-
-
 
 ```
 
@@ -139,13 +121,12 @@ impeach%>%
 
 ```{r}
 
-  
+impeach%>%
+  filter(party == "D") %>% 
+  group_by(for_impeachment, median_age) %>%  
+  summarize(mean_median_size = mean(median_age, na.rm = TRUE))
 
-
-
-
-
-
+In this code I compared for Democratic members who were for or against impeachment and their median age.
 
 ```
 
@@ -155,12 +136,9 @@ Use the mutate() function to create two new columns: one that extracts the year 
 
 ```{r}
 
-  
-
-
-
-
-
+  impeach%>%
+ mutate(year_announced = year(date_announced),
+         month_announced = month(date_announced))
 
 
 ```
@@ -169,13 +147,11 @@ Use the mutate() function to create two new columns: one that extracts the year 
 
 ```{r}
 
-  
-
-
-
-
-
-
+impeach%>%
+  mutate(year_announced = year(date_announced),
+         month_announced = month(date_announced))%>%
+  filter(party == "D", for_impeachment == "YES")%>%
+  summarize(count = n())
 
 ```
 
