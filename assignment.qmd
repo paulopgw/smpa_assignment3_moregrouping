@@ -105,7 +105,9 @@ The relevant column for that is `trump_percent`.
 
 ```{r}
 
-
+impeach%>%
+  group_by(for_impeachment) %>%
+  summarize(mean_trump_percent = mean(trump_percent, na.rm = TRUE))
 
 
 
@@ -121,7 +123,10 @@ The relevant column for that is `trump_percent`.
 ```{r}
 
   
-
+impeach%>%
+  filter(for_impeachment == "YES")%>%
+  group_by(margin_flag_2018) %>%
+  summarize(count = n())
 
 
 
