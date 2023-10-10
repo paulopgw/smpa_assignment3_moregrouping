@@ -1,6 +1,6 @@
 ---
 title: "R Assignment #3"
-author: "Put Your Name Here"
+author: "Paulina Lopez"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 format:
   html:
@@ -44,9 +44,11 @@ Write your code using grouping in the chunks below to help answer the following 
 
 ```{r}
 
+impeach%>%
+  group_by(for_impeachment) %>%
+  summarize(count = n())
 
-
-
+There are 26 who are not in favor of impeachment, and 209 that are.
 
 
 ```
@@ -57,14 +59,11 @@ You'll want to ensure you do the grouping on both columns together, e.g. `group_
 
 ```{r}
 
-
-
-
-
-
-
-
-
+impeach%>%
+  filter(party == "D") %>%  
+  group_by(for_impeachment, gdp_above_national) %>%  
+  summarize(count = n())
+  
 
 ```
 
@@ -73,12 +72,10 @@ You'll want to ensure you do the grouping on both columns together, e.g. `group_
 ```{r}
 
 
-
-
-
-
-
-
+impeach%>%
+  filter(party == "D") %>%  
+  group_by(for_impeachment,pct_bachelors_compared_to_national) %>%  
+  summarize(count = n())
 
 
 ```
@@ -91,7 +88,9 @@ In other words, you want to end up with the calculated mean for what that percen
 
 ```{r}
 
-
+impeach%>%
+  group_by(for_impeachment) %>%
+  summarize(mean_pct_bachelors = mean(pct_bachelors, na.rm = TRUE))
 
 
 
